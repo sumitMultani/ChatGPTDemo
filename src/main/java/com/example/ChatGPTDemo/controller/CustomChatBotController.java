@@ -4,6 +4,7 @@ import com.example.ChatGPTDemo.model.ChatGptRequest;
 import com.example.ChatGPTDemo.model.ChatGptResponse;
 import com.example.ChatGPTDemo.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,11 @@ public class CustomChatBotController {
     @Autowired
     private RestTemplate template;
 
-    String chatGptUrl = "https://api.openai.com/v1/chat/completions";
+    @Value("${chatgpt.api.url}")
+    private String chatGptUrl;
 
-    String chatGptModel = "gpt-3.5-turbo";
+    @Value("${chatgpt.model}")
+    private String chatGptModel;
 
     @GetMapping("/bot/{message}")
     public ChatGptResponse getChatGptResponse(@PathVariable("message") String message){
